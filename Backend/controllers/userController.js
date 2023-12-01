@@ -24,6 +24,7 @@ module.exports.editUser = (req, res) => {
       res.send({ error: err, msg: "Something went wrong!" });
     });
 };
+
 module.exports.addUser = async (req, res) => {
   const newuser = req.body;
   console.log(newuser)

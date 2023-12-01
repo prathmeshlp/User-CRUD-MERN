@@ -36,8 +36,8 @@ const EditUser = () => {
   const handleUpdate = (e) => {
     e.preventDefault();
     dispatch(updateUser(updateData));
-    dispatch(showUser());
     navigate("/");
+    dispatch(showUser());
   };
 
   return (
@@ -94,16 +94,6 @@ const EditUser = () => {
             onChange={newData}
           />
         </div>
-        {/* <div className="mb-3">
-          <label className="form-label">Age</label>
-          <input
-            type="text"
-            name="age"
-            className="form-control"
-            value={updateData && updateData.age}
-            onChange={newData}
-          />
-        </div> */}
         <div className="mb-3">
           <input
             className="form-check-input"

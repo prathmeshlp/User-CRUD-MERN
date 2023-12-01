@@ -13,6 +13,7 @@ app.use(cors())
 // Routes
 app.use("/api",UserRoutes);
 
+const PORT = 3001 || process.env.PORT;
 
 mongoose
   .connect(process.env.MONGO_URL, {
@@ -22,6 +23,6 @@ mongoose
   .then(() => console.log("MongoDB connected..."))
   .catch((err) => console.log(err));
 
-app.listen(process.env.PORT, () => {
-  console.log(`server is listening on port ${process.env.PORT}`);
+app.listen(PORT, () => {
+  console.log(`server is listening on port ${PORT}`);
 });

@@ -9,8 +9,7 @@ export const createUser = createAsyncThunk(
     try {
       console.log("data", data);
       const response = await axios.post(`${apiURL}/adduser`, { ...data });
-      const result = await response.data;
-      return result;
+      return response.data;
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -23,8 +22,7 @@ export const showUser = createAsyncThunk(
   async (args, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${apiURL}/getusers`);
-      const result = await response.data;
-      return result;
+      return response.data;
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -36,50 +34,21 @@ export const deleteUser = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     console.log(id);
     try {
-      const response = await axios.delete(`${apiURL}/deleteuser/${id}`)
-      const result = await response.data;
-      console.log(result);
-      return result;
+      const response = await axios.delete(`${apiURL}/deleteuser/${id}`);
+      return response.data;
     } catch (error) {
       return rejectWithValue(error);
     }
   }
 );
 
-// update action
-// export const updateUser = createAsyncThunk(
-//   "updateUser",
-//   async (data, { rejectWithValue }) => {
-//     console.log("datacreateslice", data);
-//     const response = await fetch(
-//       `${apiURL}/edituser`,
-//       {
-//         method: "PUT",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: data,
-//       }
-//     );
-
-//     try {
-//       const result = await response.json();
-//       return result;
-//     } catch (error) {
-//       return rejectWithValue(error);
-//     }
-//   }
-// );
-
 export const updateUser = createAsyncThunk(
   "updateUser",
   async (data, { rejectWithValue }) => {
     console.log("datacreateslice", data);
     try {
-      const response = await axios.put(`${apiURL}/edituser/${data._id}`, {
-        ...data,
-      });
-      console.log(response, "responsefromserver");
+      const response = await axios.put(`${apiURL}/edituser/${data._id}`, data);
+      console.log(response.data, "updateresponse");
       return response.data;
     } catch (error) {
       return rejectWithValue(error);
@@ -103,59 +72,62 @@ export const userDetail = createSlice({
     },
   },
 
-  extraReducers: {
-    [createUser.pending]: (state) => {
-      state.loading = true;
-    },
-    [createUser.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.users.push(action.payload);
-    },
-    [createUser.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.payload.message;
-    },
-    [showUser.pending]: (state) => {
-      state.loading = true;
-    },
-    [showUser.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.users = action.payload;
-    },
-    [showUser.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(
+        createUser.pending,
 
-    [deleteUser.pending]: (state) => {
-      state.loading = true;
-    },
-    [deleteUser.fulfilled]: (state, action) => {
-      state.loading = false;
-      const { id } = action.payload;
-      if (id) {
-        state.users = state.users.filter((ele) => ele.id !== id);
-      }
-    },
-    [deleteUser.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-
-    [updateUser.pending]: (state) => {
-      state.loading = true;
-    },
-    [updateUser.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.users = state.users.map((ele) =>
-        ele._id === action.payload._id ? action.payload : ele
-      );
-     
-    },
-    [updateUser.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.payload.message;
-    },
+        (state) => {
+          state.loading = true;
+        }
+      )
+      .addCase(createUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.users.push(action.payload);
+      })
+      .addCase(createUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
+      .addCase(showUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(showUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.users = action.payload;
+      })
+      .addCase(showUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(deleteUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.loading = false;
+        if (action.payload.id) {
+          state.users = state.users.filter(
+            (ele) => ele.id !== action.payload.id
+          );
+        }
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.users = state.users.map((ele) =>
+          ele._id === action.payload._id ? action.payload : ele
+        );
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      });
   },
 });
 
