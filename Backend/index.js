@@ -11,6 +11,7 @@ app.use(express.json());
 app.use(cors())
 
 // Routes
+app.use('/',(req,res)=>{res.status(200).json({message:"Hello World"})})
 app.use("/api",UserRoutes);
 
 const PORT = 3001 || process.env.PORT;
