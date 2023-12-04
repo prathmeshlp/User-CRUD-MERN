@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const apiURL = "http://localhost:3001/api";
+const apiURL = "https://user-crud-server-nine.vercel.app";
 
 export const createUser = createAsyncThunk(
   "createUser",
