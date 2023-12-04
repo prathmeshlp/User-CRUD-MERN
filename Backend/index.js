@@ -7,11 +7,12 @@ const cors = require("cors");
 
 //Middlewares
 // app.use(cors());
-app.use(express.json());
 app.use(cors())
+app.use(express.json());
+
 
 // Routes
-app.use('/',(req,res)=>{res.status(200).json({message:"Hello World"})})
+app.get('/',(req,res)=>{res.status(200).json({message:"Hello World"})})
 app.use("/api",UserRoutes);
 
 const PORT = 3001 || process.env.PORT;
