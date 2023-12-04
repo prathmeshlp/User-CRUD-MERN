@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const express = require("express");
-const UserRoutes = require("../routes/userRoutes");
+const UserRoutes = require("./routes/userRoutes");
 require("dotenv").config();
 const app = express();
 const cors = require("cors");
@@ -13,7 +13,7 @@ app.use(express.json());
 
 // Routes
 app.get('/',(req,res)=>{res.status(200).json({message:"Hello World"})})
-app.use("/api",UserRoutes);
+app.use("/", UserRoutes);
 
 const PORT = 3001 || process.env.PORT;
 
