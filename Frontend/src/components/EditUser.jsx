@@ -36,8 +36,8 @@ const EditUser = () => {
   const handleUpdate = (e) => {
     e.preventDefault();
     dispatch(updateUser(updateData));
-    navigate("/");
     dispatch(showUser());
+    navigate("/");
   };
 
   return (
