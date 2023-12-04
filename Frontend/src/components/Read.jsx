@@ -13,6 +13,9 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { TablePagination } from "@mui/material";
 
+//Mat Icons
+import EditIcon from "@mui/icons-material/Edit";
+
 //rssuite Loader
 import { ColorRing } from "react-loader-spinner";
 
@@ -26,7 +29,7 @@ const Read = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const { users, loading, searchData } = useSelector((state) => state.app);
-  console.log(users,"Users")
+  console.log(users, "Users");
 
   useEffect(() => {
     dispatch(showUser());
@@ -168,6 +171,12 @@ const Read = () => {
                           <TableCell align="center">{user.city}</TableCell>
                           <TableCell align="center">{user.address}</TableCell>
                           <TableCell align="center">
+                            {/* <Link
+                              to={`/edit/${user._id}`}
+                              className="card-link"
+                            >
+                              Edit User
+                            </Link> */}
                             <Link
                               to={`/edit/${user._id}`}
                               className="card-link"

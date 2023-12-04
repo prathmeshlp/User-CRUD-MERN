@@ -27,6 +27,7 @@ const Create = () => {
     e.preventDefault();
     console.log("user...", user);
     dispatch(createUser(user));
+    dispatch(showUser())
     navigate("/");
   };
 
